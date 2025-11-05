@@ -1503,8 +1503,65 @@
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 60,
    "id": "61d3da1e-5b4b-42ac-9065-83485d9a53fd",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Find the number of months where a new store was open near nearby\n",
+    "def comp_open_months(df):\n",
+    "    df['CompetitionOpen'] = (12 * (df.Year - df.CompetitionOpenSinceYear) ) + df.CompetitionOpenSinceMonth\n",
+    "    # Replace negative values with 0\n",
+    "    df['CompetitionOpen'] = df['CompetitionOpen'].map(lambda x: 0 if x < 0 else x).fillna(0)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 61,
+   "id": "07a3195c-a7aa-41c6-9075-69b9a7386dc6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "comp_open_months(merged_df)\n",
+    "comp_open_months(merged_test_df)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 64,
+   "id": "cef4c9ff-9fae-4f47-8df9-d381c949ff06",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0           93.0\n",
+       "1          107.0\n",
+       "2          120.0\n",
+       "3           81.0\n",
+       "4            4.0\n",
+       "           ...  \n",
+       "1016776     93.0\n",
+       "1016827    178.0\n",
+       "1016863      0.0\n",
+       "1017042      0.0\n",
+       "1017190    135.0\n",
+       "Name: CompetitionOpen, Length: 844392, dtype: float64"
+      ]
+     },
+     "execution_count": 64,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "merged_df.CompetitionOpen"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f5237cf9-f163-492c-9585-4dfdd0f1067d",
    "metadata": {},
    "outputs": [],
    "source": []
