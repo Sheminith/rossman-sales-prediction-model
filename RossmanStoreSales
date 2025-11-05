@@ -2,8 +2,20 @@
  "cells": [
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 27,
    "id": "afb19069-c15e-4305-a8b0-356a80080b15",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# =========================================================================================================================================== #\n",
+    "# ============================================================ BASIC SETUP ================================================================== #\n",
+    "# =========================================================================================================================================== #"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "id": "bf707534-be0c-404a-ab3f-21cfc8837473",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -22,7 +34,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 29,
    "id": "387f3207-7296-4dbc-954c-72dec31806a7",
    "metadata": {},
    "outputs": [
@@ -43,7 +55,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 30,
    "id": "306d3b96-452b-42e6-a136-fd8d27e06cc4",
    "metadata": {},
    "outputs": [
@@ -272,7 +284,7 @@
        "[1115 rows x 10 columns]"
       ]
      },
-     "execution_count": 7,
+     "execution_count": 30,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -283,7 +295,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 31,
    "id": "fd0bf20b-c0a0-49aa-9146-e6df03ad4de3",
    "metadata": {},
    "outputs": [
@@ -487,7 +499,7 @@
        "[1017209 rows x 9 columns]"
       ]
      },
-     "execution_count": 8,
+     "execution_count": 31,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -498,7 +510,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 32,
    "id": "953002ac-5092-4081-898b-f85bf48b853b",
    "metadata": {},
    "outputs": [
@@ -690,7 +702,7 @@
        "[41088 rows x 8 columns]"
       ]
      },
-     "execution_count": 9,
+     "execution_count": 32,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -701,7 +713,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 33,
    "id": "af900c62-c094-40a4-955a-02a2e1514784",
    "metadata": {},
    "outputs": [],
@@ -713,7 +725,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 34,
    "id": "2c536fc0-1295-403a-ba0f-bc1bced8f813",
    "metadata": {},
    "outputs": [
@@ -1051,7 +1063,7 @@
        "[1017209 rows x 18 columns]"
       ]
      },
-     "execution_count": 11,
+     "execution_count": 34,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1062,7 +1074,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 15,
+   "execution_count": 35,
    "id": "ba10105b-5d57-4e0e-bc7f-f49b4b982668",
    "metadata": {},
    "outputs": [
@@ -1388,7 +1400,7 @@
        "[41088 rows x 17 columns]"
       ]
      },
-     "execution_count": 15,
+     "execution_count": 35,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -1399,8 +1411,53 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 18,
+   "execution_count": 49,
+   "id": "0ae9b6db-d59a-4a28-961f-e97959304545",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Series([], Name: count, dtype: int64)"
+      ]
+     },
+     "execution_count": 49,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "merged_df[merged_df['Open'] == 0].Sales.value_counts()\n",
+    "# NOTICE that there is no sale when the shop is closed"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 50,
+   "id": "1af6ba44-6e03-4c9c-9483-d4270b6441e9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Remove all rows where store is closed\n",
+    "merged_df = merged_df[merged_df['Open'] == 1].copy()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
    "id": "6bf9822b-80f2-4ee3-ad92-c4abd2a8434c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# =========================================================================================================================================== #\n",
+    "# ======================================================== FEATURE ENGINEERING =============================================================== #\n",
+    "# =========================================================================================================================================== #"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 52,
+   "id": "d4534fcc-af8d-4eb2-9875-9c76be822f77",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1414,8 +1471,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
-   "id": "ab2b8fd6-2797-42c0-9e35-c02fe6bcfa45",
+   "execution_count": 53,
+   "id": "64baefb6-c223-4fcb-9adb-2f54c8317ade",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -1425,53 +1482,29 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 25,
-   "id": "fb173c02-f83e-4272-9f4d-77c140006e05",
+   "execution_count": 54,
+   "id": "eca5b9b7-1c6e-49ef-a5c8-983081d4939e",
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "Index(['Month', 'Day', 'WeekOfYear'], dtype='object')"
+       "Index(['Year', 'Month', 'Day', 'WeekOfYear'], dtype='object')"
       ]
      },
-     "execution_count": 25,
+     "execution_count": 54,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "merged_df.columns[-3:]"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 26,
-   "id": "e5a7fc7f-6bbf-4d36-9f92-298f6a0e0469",
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "Sales\n",
-       "0    172817\n",
-       "Name: count, dtype: int64"
-      ]
-     },
-     "execution_count": 26,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "merged_df[merged_df.Open == 0].Sales.value_counts()\n",
-    "# NOTICE that there is no sale when the shop is closed"
+    "merged_df.columns[-4:]"
    ]
   },
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "6511516a-19d7-49be-aaa3-335a6f2cdbc1",
+   "id": "61d3da1e-5b4b-42ac-9065-83485d9a53fd",
    "metadata": {},
    "outputs": [],
    "source": []
