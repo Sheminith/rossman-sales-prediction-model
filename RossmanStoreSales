@@ -1564,7 +1564,35 @@
    "id": "f5237cf9-f163-492c-9585-4dfdd0f1067d",
    "metadata": {},
    "outputs": [],
-   "source": []
+   "source": [
+    "def is_promo_month(row):\n",
+    "    month2str = {\n",
+    "        1: 'Jan', 2: 'Feb', 3: 'Mar',\n",
+    "        4: 'Apr', 5: 'May', 6: 'Jun',\n",
+    "        7: 'Jul', 8: 'Aug', 9: 'Sep',\n",
+    "        10: 'Oct', 11: 'Nov', 12: 'Dec'\n",
+    "    }\n",
+    "    \n",
+    "    try:\n",
+    "        # create an array of promotion months\n",
+    "        promo_months = row['PromoInterval' or ''].split(',')\n",
+    "\n",
+    "        # if current month of the row is in promotion months return 1\n",
+    "        if row['Promo2Open'] and month2str[row['Month']] in promo_months:\n",
+    "            return 1\n",
+    "        else:\n",
+    "            return 0\n",
+    "    except Exception:\n",
+    "        return 0\n",
+    "\n",
+    "def promo_cols(df):\n",
+    "    # Calculate the number of months since promo2 was open\n",
+    "    df['Promo2Open'] = 12 * (df.Year - df.Promo2SinceYear) + (df.WeekOfYear - df.Promo2SinceWeek)* 7/30.5\n",
+    "    df['Promo2Open'] = df['Promo2Open'].map(lambda x: 0 if x < 0 else x).fillna(0) * df['Promo2']\n",
+    "\n",
+    "    # Whether new promotions started in current month\n",
+    "    df['IsPromo2Month'] = df.apply(is_promo_month, axis=1) * df['Promo2']"
+   ]
   }
  ],
  "metadata": {
